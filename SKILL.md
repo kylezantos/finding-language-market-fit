@@ -1,6 +1,6 @@
 ---
 name: language-market-fit
-description: Write or audit product/marketing copy using Language-Market Fit principles. Helps compose headlines, landing pages, ads, and CTAs grounded in real customer language — or audit existing copy for conversion gaps. Triggers on "write copy", "audit copy", "headline", "landing page copy", "messaging", "language-market fit", "value prop", "tagline", "conversion copy".
+description: Writes or audits product/marketing copy using Language-Market Fit principles. Helps compose headlines, landing pages, ads, and CTAs grounded in real customer language — or audit existing copy for conversion gaps. Triggers on "write copy", "audit copy", "headline", "landing page copy", "messaging", "language-market fit", "value prop", "tagline", "conversion copy".
 argument-hint: "[compose | audit] [optional: URL or description]"
 allowed-tools: Read, WebFetch, Bash(curl *)
 ---
@@ -23,7 +23,17 @@ Every piece of copy you write or evaluate, run through these mental filters:
 
 ## Choose Your Mode
 
-If the user specifies a mode, go directly to it. If not, ask:
+Detect mode from `$ARGUMENTS`:
+- Contains "compose", "write", or "create" → Compose mode
+- Contains "audit", "review", or "evaluate" → Audit mode
+- Contains a URL → Audit mode (fetch the URL)
+- Ambiguous or no arguments → Ask
+
+If AskUserQuestion is available:
+- **Compose** — Write new copy together (headlines, landing pages, ads, emails)
+- **Audit** — Tear apart existing copy and rebuild what's broken
+
+Otherwise ask:
 
 > I can help two ways:
 > 1. **Compose** — Write new copy together (headlines, landing pages, ads, emails)
@@ -39,29 +49,37 @@ Your goal: extract enough customer reality to write copy grounded in real langua
 
 ### Phase 1: Understand the Customer's World
 
-You need to understand the prospect's situation *before* the product enters the picture. Ask these — but adapt based on what the user already told you. Don't repeat what you already know. Push back if answers are vague.
+You need to understand the prospect's situation *before* the product enters the picture. Ask 2-3 questions at a time — don't dump everything at once. Adapt based on what the user already told you. Push back if answers are vague.
 
-**The essential questions:**
+**Round 1 — Product and customer context:**
 - **What does this product actually do?** (One sentence. If the answer includes "platform" or "solution" without specifics, ask again.)
 - **Who specifically is buying this, and what's their situation when they start looking?** (Not a demographic — the moment and context. "A marketing manager who just got yelled at for low lead quality" is useful. "SMBs" is not.)
 - **What were they doing before?** (The workaround, the spreadsheet, the manual process, the competitor they hate.)
+
+**Round 2 — Triggers and raw material:**
 - **What's the trigger — the thing that makes them finally go searching?** (Push hard here. "They want to be more efficient" is not a trigger. "Their CEO asked why it takes 3 weeks to onboard a client" is.)
 - **What does life look like after they start using it?** (Concrete outcome, not "they're more productive.")
-
-**Then — and this is critical — ask for raw material:**
-
-> Do you have any of these? Even one is gold:
-> - Customer interview transcripts or notes
-> - Support tickets or chat logs where customers describe their problem
-> - Reviews (yours or competitors') on G2, Capterra, Reddit, app stores
-> - Testimonials or case study quotes
-> - Sales call notes or common objections
->
-> The best copy comes from your customers' actual words. Share whatever you have and I'll mine it for language.
+- **Do you have any raw customer language?** Even one source is gold:
+  - Customer interview transcripts or notes
+  - Support tickets or chat logs where customers describe their problem
+  - Reviews (yours or competitors') on G2, Capterra, Reddit, app stores
+  - Testimonials, case study quotes, or sales call notes
 
 **If they have raw material:** Read it carefully. Extract exact phrases — verbs, nouns, emotional language. These become your headline building blocks. Call out the most promising phrases explicitly: "This phrase from the support ticket — 'I just need to know what's going on without asking 5 people' — that's a headline."
 
 **If they don't have raw material:** Be honest that you're working with less signal. Flag which parts of your copy are grounded vs. inferred. Suggest specific places to gather language (competitor reviews are often the fastest source).
+
+### Discovery Summary
+
+Present your understanding before proceeding:
+
+> **Product:** [one-sentence description]
+> **Customer:** [who they are + their situation]
+> **Trigger:** [what makes them act]
+> **Before/after:** [workaround → desired outcome]
+> **Raw material:** [what you have to work with, or "inference only"]
+
+**STOP.** Do not proceed to headline generation until the user confirms this summary is accurate or adjusts it.
 
 ### Phase 2: Generate Headlines
 
@@ -98,6 +116,12 @@ Don't just present final copy — walk the user through your stress-test:
 > - The biggest risk with this version is ______. Here's how I'd mitigate that: ______.
 
 Suggest what to A/B test first and why.
+
+### Phase 5: Validate Before Launch
+
+Recommend the user validate copy before committing to it:
+
+> Before you launch this, run a quick [5-second comprehension test](reference.md). Show the headline to 3-4 people for 5 seconds, then ask them to explain what the product does. If they repeat the words back instead of explaining in their own words, comprehension hasn't landed — iterate.
 
 ---
 
