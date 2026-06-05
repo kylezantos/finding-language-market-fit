@@ -2,7 +2,7 @@
 name: language-market-fit
 description: Writes or audits product/marketing copy using Language-Market Fit principles. Helps compose headlines, landing pages, ads, and CTAs grounded in real customer language — or audit existing copy for conversion gaps. Triggers on "write copy", "audit copy", "headline", "landing page copy", "messaging", "language-market fit", "value prop", "tagline", "conversion copy".
 argument-hint: "[compose | audit] [optional: URL or description]"
-allowed-tools: Read, WebFetch, Bash(curl *)
+allowed-tools: Read, Write, WebFetch, Bash(curl *), Bash(open *)
 ---
 
 # Language-Market Fit
@@ -20,6 +20,17 @@ Every piece of copy you write or evaluate, run through these mental filters:
 3. **Does this complete "Now you can ______" or "Our product is ______"?** The first is customer-centric. The second is company-centric. Always aim for the first.
 4. **Could a competitor paste this on their site and it would still make sense?** If yes, it's not specific enough.
 5. **If I showed this to someone for 5 seconds, could they explain what the product does in their own words?** If they'd just repeat the words back, comprehension has failed.
+
+## Gotchas
+
+Where this skill fails if you're not careful. Check your own work against these.
+
+1. **Don't show copy before it passes the voice check.** Your default register is the AI tell: em dashes, the negation pivot ("X isn't Y, it's Z"), over-explaining, smooth-but-voiceless lines. The customer clocks generated copy in one scan. Run every line through [anti-ai-tells.md](anti-ai-tells.md) and the [Platitude Kill List](reference.md) *before* it reaches the user. Do it silently.
+2. **Don't invent customer language to fill a gap.** If you don't have a real quote, label the line inferred and say so. Fabricated "customer voice" is worse than honest inference, because it sends the user to build on a signal that was never there.
+3. **Don't skip the discovery gate to be helpful.** Writing headlines before you understand the trigger produces company-centric copy every time. The STOP gates are load-bearing, not ceremony.
+4. **Don't treat the Platitude Kill List as the whole job.** It catches marketing tells ("seamless," "faster"). The anti-ai-tells file catches generation tells (filler, banned shapes, the em dash). A line can pass one and fail the other.
+5. **Don't soften the audit to be nice.** "This is solid, minor tweaks" when the headline is company-centric wastes the user's traffic. Lead with the biggest problem and quote the exact failing copy.
+6. **Don't over-correct into sterile copy.** A three-part line of *concrete* outcomes ("Sleep more. Stress less. Live better") is good copy, not a tell. The tell is three *abstract* parts. Voice beats compliance. See the carve-outs in [anti-ai-tells.md](anti-ai-tells.md).
 
 ## Choose Your Mode
 
@@ -96,7 +107,7 @@ Write 5-8 headline options. For each one:
 - Try both goal-framed (what they gain) and struggle-framed (what they escape) versions
 - Vary the specificity level — some ultra-specific, some slightly broader — so the user can calibrate
 
-**Before presenting, self-check every headline against the [Platitude Kill List](reference.md).** If any headline contains a word from that list without concrete context, rewrite it before showing it.
+**Voice check (required gate).** Before any headline reaches the user, run every option through the [Anti-AI Voice Check](anti-ai-tells.md) and the [Platitude Kill List](reference.md). Strip em dashes, kill platitudes, rewrite any banned shape, delete-test filler. Do this silently. The user should only ever see headlines that already passed. If a line you like keeps failing, the underlying claim is probably abstract — fix the claim, not the wording.
 
 ### Phase 3: Build Out the Winner
 
@@ -105,6 +116,8 @@ Once the user picks a direction, extend it:
 - **Subheadline** — Adds the "how" or a second dimension (if headline is goal-focused, subheadline can address the struggle, or vice versa)
 - **3 benefit lines** — Each one maps to a specific customer struggle. Not features. Write them as "struggle → resolution" pairs internally, even if the final copy only shows the resolution.
 - **CTA** — Completes "I want to ______." If the CTA is generic ("Get Started", "Learn More"), push for something specific to the value prop.
+
+Run the same [voice check](anti-ai-tells.md) on every line of the package, not just the headline. Subheads and benefit lines are where over-explaining and filler creep back in.
 
 ### Phase 4: Stress-Test Together
 
@@ -122,6 +135,12 @@ Suggest what to A/B test first and why.
 Recommend the user validate copy before committing to it:
 
 > Before you launch this, run a quick [5-second comprehension test](reference.md). Show the headline to 3-4 people for 5 seconds, then ask them to explain what the product does. If they repeat the words back instead of explaining in their own words, comprehension hasn't landed — iterate.
+
+### Phase 6: Deliver the Artifact
+
+Once the package is settled (headline chosen, package built, stress-tested), produce the final deliverable as a self-contained HTML file. Follow [artifact-template.md](artifact-template.md): assemble the compose layout, write it to the working directory as `language-market-fit-compose-[slug].html`, open it, and tell the user the path.
+
+Generate it only after the copy is agreed and has passed the voice check. The artifact presents the finished copy; it is not a place to relax the standard.
 
 ---
 
@@ -166,6 +185,8 @@ Go through the copy piece by piece. For each significant element, ask yourself:
 3. **Why it matters** — What's the prospect thinking/feeling at this point?
 4. **2-3 rewrite options** — Ranked by how grounded they are in customer language you were given. If you're inferring, say so.
 
+**Every rewrite is copy too.** Run each one through the [Anti-AI Voice Check](anti-ai-tells.md) before presenting it. Don't replace a company-centric platitude with an AI-sounding one.
+
 ### Phase 3: Prioritized Fix List
 
 End with a clear priority order:
@@ -175,6 +196,10 @@ End with a clear priority order:
 3. **Supporting copy fixes** — Ordered by impact.
 4. **What's missing** — Copy gaps (e.g., no struggle acknowledgment, no specificity, no social proof that addresses the core anxiety).
 5. **Customer language gaps** — What you couldn't fix because you didn't have real customer words. Include specific suggestions for where to find them (which review sites, what interview questions to ask — see [reference.md](reference.md) for the interview framework).
+
+### Phase 4: Deliver the Report
+
+Once the prioritized fix list is complete, produce the audit as a self-contained HTML file. Follow [artifact-template.md](artifact-template.md): assemble the audit layout (context, findings by impact with severity chips, fix-in-this-order list, language gaps), write it to the working directory as `language-market-fit-audit-[slug].html`, open it, and tell the user the path.
 
 ---
 
@@ -190,4 +215,8 @@ Real-world copy projects rarely have perfect customer interview data. Adapt your
 
 **Never pretend you have more signal than you do.** The whole point of this framework is that good copy comes from real customer language, not clever wordsmithing.
 
-For the complete platitude kill list, interview question framework, headline examples, and comprehension testing protocol, see [reference.md](reference.md).
+## Supporting Files
+
+- **[reference.md](reference.md)** — Platitude Kill List, headline patterns, language-mining sources, customer interview questions, comprehension testing protocol. Load during compose and audit work.
+- **[anti-ai-tells.md](anti-ai-tells.md)** — Voice check that keeps output from sounding generated. Run as a gate before any copy is shown or written.
+- **[artifact-template.md](artifact-template.md)** — Clean product-UI HTML template plus compose and audit layouts. Load when generating the final deliverable.
