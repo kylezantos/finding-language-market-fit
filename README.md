@@ -75,7 +75,7 @@ npx skills add kylezantos/finding-language-market-fit -a codex -a opencode
 
 ### Manual install
 
-Copy the entire repo contents into a `language-market-fit/` directory in your agent's skills path:
+Copy the contents of `skills/language-market-fit/` into a `language-market-fit/` directory in your agent's skills path:
 
 | Agent | Path |
 |-------|------|
@@ -86,10 +86,11 @@ Copy the entire repo contents into a `language-market-fit/` directory in your ag
 | Gemini CLI | `~/.gemini/skills/language-market-fit/` |
 | Windsurf | `~/.codeium/windsurf/skills/language-market-fit/` |
 
-Or clone:
+Or install from a local clone:
 
 ```bash
-git clone https://github.com/kylezantos/finding-language-market-fit.git ~/.claude/skills/language-market-fit
+git clone https://github.com/kylezantos/finding-language-market-fit.git
+npx skills add ./finding-language-market-fit/skills/language-market-fit -g
 ```
 
 Then invoke with `/language-market-fit` in any coding agent.
@@ -106,10 +107,11 @@ Then invoke with `/language-market-fit` in any coding agent.
 ## What's inside
 
 ```
-SKILL.md             # Core flow: mental filters, gotchas, compose + audit modes
-reference.md         # Platitude kill list, interview framework, headline examples, 5-second test
-anti-ai-tells.md     # Voice check that keeps copy from sounding generated
-artifact-template.md # Clean product-UI HTML template for the final deliverable
+skills/language-market-fit/
+  SKILL.md             # Core flow: mental filters, gotchas, compose + audit modes
+  reference.md         # Platitude kill list, interview framework, headline examples, 5-second test
+  anti-ai-tells.md     # Voice check that keeps copy from sounding generated
+  artifact-template.md # Clean product-UI HTML template for the final deliverable
 ```
 
 ## Works with any agent
